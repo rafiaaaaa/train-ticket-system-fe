@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --primary: white;
+  --secondary: black;
+  --bg-primary: var(--color-amber-600);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-bg-primary: var(--bg-primary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #0a0a0a;
+    --secondary: #ededed;
+  }
+} */
+
+@layer base {
+  body {
+    @apply text-secondary font-sans antialiased;
+  }
+}
