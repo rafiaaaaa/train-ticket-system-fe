@@ -1,7 +1,14 @@
-import { api } from "@/utils/api";
+import { api, ApiError } from "@/utils/api";
 
 export const getUser = async () => {
-  const res = await api("/auth/me");
-  if (res.success) return res.data;
-  return null;
+  try {
+    const res = await api("/auth/me");
+    return res.data;
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 401) {
+      return null;
+    }
+
+    throw err;
+  }
 };
