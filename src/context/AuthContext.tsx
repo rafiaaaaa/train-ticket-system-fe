@@ -2,8 +2,6 @@
 
 import { getUser } from "@/api/getUser";
 import { logout } from "@/features/auth/api/logout";
-import { api } from "@/utils/api";
-import { useRouter } from "next/navigation";
 import {
   createContext,
   useContext,
@@ -35,7 +33,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async function loadUser() {
       try {
         const user = await getUser();
-        console.log("test", user);
         setUser(user);
       } catch {
         setUser(null);

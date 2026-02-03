@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Loader2, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -80,7 +80,9 @@ export function Navbar() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            {!user ? (
+            {loading ? (
+              <Loader2 className="animate-spin text-white text-center" />
+            ) : !user ? (
               <>
                 <Link href={`/auth`}>
                   <Button variant="default" size="sm">

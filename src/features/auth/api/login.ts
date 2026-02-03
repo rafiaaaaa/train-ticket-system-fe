@@ -42,5 +42,5 @@ export async function loginAction(payload: LoginRequest) {
     path: "/",
   });
 
-  redirect("/");
+  return true;
 }

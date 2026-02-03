@@ -27,7 +27,10 @@ export const SignInForm = () => {
   const handleSignIn = handleSubmit(async (data) => {
     setIsLoading(true);
     try {
-      await loginAction(data);
+      const res = await loginAction(data);
+      if (res) {
+        window.location.href = "/";
+      }
     } catch (err: any) {
       toast.error(err.message);
     } finally {

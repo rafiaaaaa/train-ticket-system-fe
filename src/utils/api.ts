@@ -1,7 +1,9 @@
-type FetchOptions = {
+type FetcherOptions = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  headers?: Record<string, string>;
   body?: unknown;
-  headers?: HeadersInit;
+  credentials?: RequestCredentials;
+  cache?: RequestCache;
 };
 
 export class ApiError extends Error {
@@ -15,31 +17,22 @@ export class ApiError extends Error {
   }
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const isServer = typeof window === "undefined";
 
-export async function api<T>(url: string, options: FetchOptions = {}) {
+const BASE_URL = isServer ? process.env.NEXT_PUBLIC_API_URL! : "/api";
+console.log("BASE_URL", BASE_URL);
+export async function api(url: string, options: FetcherOptions = {}) {
+  console.log("api", BASE_URL + url);
   const res = await fetch(BASE_URL + url, {
     method: options.method ?? "GET",
     headers: {
       "Content-Type": "application/json",
       ...options.headers,
     },
-    credentials: "include",
     body: options.body ? JSON.stringify(options.body) : undefined,
+    credentials: options.credentials,
+    cache: options.cache,
   });
 
-  if (!res.ok) {
-    const error = await res.json();
-    throw new ApiError(
-      error.message ?? "Something went wrong",
-      res.status,
-      error,
-    );
-  }
-
-  if (res.status === 204) {
-    return null as T;
-  }
-
-  return await res.json();
+  return res.json();
 }

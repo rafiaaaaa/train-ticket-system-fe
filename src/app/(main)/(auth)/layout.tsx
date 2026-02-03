@@ -8,7 +8,6 @@ export default async function ProtectedLayout({
   children: React.ReactNode;
 }) {
   const res = await getUserServer();
-  console.log("anjay", res);
   if (res) {
     redirect("/");
   }
