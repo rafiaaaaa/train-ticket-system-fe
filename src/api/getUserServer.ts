@@ -1,24 +1,19 @@
+// lib/getUserServer.ts
 import { cookies } from "next/headers";
 
-export const getUserServer = async () => {
-  try {
-    const cookieStore = await cookies();
-    const cookieHeader = cookieStore.toString();
+const BASE_URL = process.env.NEXT_PUBLIC_FE_URL!;
 
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/auth/me", {
-      headers: {
-        Cookie: cookieHeader,
-      },
-      credentials: "include",
-      cache: "no-store",
-    });
+export async function getUserServer() {
+  const cookieStore = await cookies();
 
-    if (!res.ok) return null;
+  const res = await fetch(BASE_URL + "/api/auth/me", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+    cache: "no-store",
+  });
 
-    const json = await res.json();
-    console.log(json);
-    return json.data;
-  } catch {
-    return null;
-  }
-};
+  if (!res.ok) return null;
+
+  return res.json();
+}

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { login } from "../api/login";
+import { loginAction } from "../api/login";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/validators/auth.schema";
@@ -27,16 +27,9 @@ export const SignInForm = () => {
   const handleSignIn = handleSubmit(async (data) => {
     setIsLoading(true);
     try {
-      toast.promise(login(data), {
-        loading: "Logging in...",
-        success: () => {
-          router.refresh();
-          return "Logged in successfully";
-        },
-        error: (err) => err.message,
-      });
-    } catch (error) {
-      console.error(error);
+      await loginAction(data);
+    } catch (err: any) {
+      toast.error(err.message);
     } finally {
       setIsLoading(false);
     }

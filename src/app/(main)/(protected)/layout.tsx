@@ -1,3 +1,4 @@
+import { getUser } from "@/api/getUser";
 import { getUserServer } from "@/api/getUserServer";
 import { redirect } from "next/navigation";
 
@@ -6,8 +7,8 @@ export default async function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const res = await getUserServer();
-  console.log(res);
+  const res = await getUser();
+  console.log("bjir", res);
   if (!res) {
     redirect("/auth");
   }
