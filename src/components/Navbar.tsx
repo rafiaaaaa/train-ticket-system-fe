@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Schedule", href: "#schedule" },
+  { label: "Home", href: "/" },
+  { label: "Schedule", href: "/search" },
   { label: "Promotions", href: "#promotions" },
   { label: "Contact", href: "#contact" },
 ];
@@ -68,13 +68,13 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="nav-link text-primary"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 

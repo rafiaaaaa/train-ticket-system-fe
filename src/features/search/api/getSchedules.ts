@@ -7,13 +7,15 @@ type GetSchedulesParams = {
   passengers?: string;
 };
 
-export const getSchedules = async (params: GetSchedulesParams) => {
+export const getSchedules = async (params: GetSchedulesParams | undefined) => {
   const searchParams = new URLSearchParams();
 
-  if (params.from) searchParams.set("from", params.from);
-  if (params.to) searchParams.set("to", params.to);
-  if (params.date) searchParams.set("date", params.date);
-  if (params.passengers) searchParams.set("passengers", params.passengers);
+  if (params) {
+    if (params.from) searchParams.set("from", params.from);
+    if (params.to) searchParams.set("to", params.to);
+    if (params.date) searchParams.set("date", params.date);
+    if (params.passengers) searchParams.set("passengers", params.passengers);
+  }
 
   const res = await api(
     `/train/schedules${

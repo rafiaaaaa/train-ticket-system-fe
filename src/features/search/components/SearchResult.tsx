@@ -31,21 +31,31 @@ type Props = {
 };
 
 export default async function SearchResult({ searchParams = {} }: Props) {
-  const { departure, destination, date, passengers = "1" } = await searchParams;
-  if (!departure || !destination || !date) {
+  const { departure, destination, date, passengers = "1" } = searchParams;
+
+  const hasSearch = Boolean(departure || destination || date);
+  const isValidSearch = Boolean(departure && destination && date);
+
+  if (hasSearch && !isValidSearch) {
     return (
       <section className="py-16 text-center text-muted-foreground">
-        Invalid search parameters
+        Please provide departure, destination, and date together
       </section>
     );
   }
 
-  const data: ScheduleCardData[] = await getSchedules({
-    from: departure,
-    to: destination,
-    date,
-    passengers,
-  });
+  const data: ScheduleCardData[] = await getSchedules(
+    isValidSearch
+      ? {
+          from: departure!,
+          to: destination!,
+          date,
+          passengers,
+        }
+      : undefined,
+  );
+
+  console.log("data", data);
   return (
     <section id="search-results" className="py-16 md:py-24">
       <div className="container mx-auto px-4">
@@ -70,8 +80,8 @@ export default async function SearchResult({ searchParams = {} }: Props) {
                 <SearchCard
                   id={s.scheduleId}
                   name={s.train.name}
-                  departure={s.origin.name}
-                  destination={s.destination.name}
+                  departure={s.origin.name!}
+                  destination={s.destination.name!}
                   departureTime={formatTime(s.departureTime)}
                   arrivalTime={formatTime(s.arrivalTime)}
                   duration={calculateDuration(s.departureTime, s.arrivalTime)}
