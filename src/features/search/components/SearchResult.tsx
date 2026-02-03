@@ -31,7 +31,7 @@ type Props = {
 };
 
 export default async function SearchResult({ searchParams = {} }: Props) {
-  const { departure, destination, date, passengers = "1" } = searchParams;
+  const { departure, destination, date, passengers = "1" } = await searchParams;
 
   const hasSearch = Boolean(departure || destination || date);
   const isValidSearch = Boolean(departure && destination && date);
