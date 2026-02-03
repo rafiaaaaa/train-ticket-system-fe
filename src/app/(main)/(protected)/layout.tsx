@@ -7,8 +7,7 @@ export default async function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const res = await getUser();
-  console.log("bjir", res);
+  const res = await getUserServer();
   if (!res) {
     redirect("/auth");
   }
