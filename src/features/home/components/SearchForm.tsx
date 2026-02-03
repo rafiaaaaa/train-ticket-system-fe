@@ -43,7 +43,7 @@ function StationDropdown({
 
     setLoading(true);
 
-    const timer = setTimeout(async () => {
+    const fetchStations = async () => {
       try {
         const data = await getStations(value.name);
         setFilteredStations(data.length ? data : []);
@@ -53,9 +53,8 @@ function StationDropdown({
       } finally {
         setLoading(false);
       }
-    }, 500);
-
-    return () => clearTimeout(timer);
+    };
+    fetchStations();
   }, [value?.name]);
 
   useEffect(() => {
