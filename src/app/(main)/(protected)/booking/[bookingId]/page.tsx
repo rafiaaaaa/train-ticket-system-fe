@@ -190,40 +190,6 @@ const OrderDetail = () => {
           }
         />
 
-        {/* Status Demo Buttons (for demonstration) */}
-        <div className="flex flex-wrap gap-2 p-4 bg-muted/50 rounded-xl">
-          <span className="text-sm text-muted-foreground mr-2">
-            Demo Status:
-          </span>
-          <Button
-            size="sm"
-            variant={status === "UNPAID" ? "default" : "outline"}
-            onClick={() =>
-              setBookingData((prev) => prev && { ...prev, status: "UNPAID" })
-            }
-          >
-            UNPAID
-          </Button>
-          <Button
-            size="sm"
-            variant={status === "PENDING" ? "default" : "outline"}
-            onClick={() =>
-              setBookingData((prev) => prev && { ...prev, status: "PENDING" })
-            }
-          >
-            PENDING
-          </Button>
-          <Button
-            size="sm"
-            variant={status === "PAID" ? "default" : "outline"}
-            onClick={() =>
-              setBookingData((prev) => prev && { ...prev, status: "PAID" })
-            }
-          >
-            PAID
-          </Button>
-        </div>
-
         {/* Two Column Layout */}
         <div className="grid lg:grid-cols-5 gap-6">
           {/* Left Column - Order & Passenger Info */}
