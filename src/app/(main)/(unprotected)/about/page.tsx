@@ -40,7 +40,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="py-16 bg-linear-to-b from-bg-primary/50 to-primary">
+      <section className="py-16 ">
         <div className="container mx-auto px-4 text-center">
           <div className="flex justify-center mb-6">
             <img
