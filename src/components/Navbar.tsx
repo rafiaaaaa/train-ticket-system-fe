@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, Menu, X } from "lucide-react";
+import { Loader2, LogOut, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -48,7 +48,7 @@ export function Navbar() {
   return (
     <div
       className={`${scrolled ? "top-0 bg-card/50" : "top-0 bg-transparent"} ${
-        mobileMenuOpen || scrolled ? "backdrop-blur-lg" : ""
+        mobileMenuOpen || scrolled ? "bg-secondary backdrop-blur-xl" : ""
       } transition-all duration-300 ease-in-out`}
     >
       <div className="container relative top-0 mx-auto px-4">
@@ -116,22 +116,23 @@ export function Navbar() {
                 </button>
 
                 {open && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-99999">
-                    <Link href="/profile">
+                  <div className="absolute right-0 mt-2 w-40 rounded shadow-lg z-99999">
+                    {/* <Link href="/profile">
                       <button
                         className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                         onClick={() => setOpen(false)}
                       >
                         Profile
                       </button>
-                    </Link>
-
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    </Link> */}
+                    <Button
+                      className="flex w-full text-left py-2"
+                      variant={"destructive"}
                       onClick={signOut}
                     >
-                      Sign out
-                    </button>
+                      <span>Sign out</span>
+                      <LogOut className="w-4 h-4 ml-2 scale-x-[-1]" />
+                    </Button>
                   </div>
                 )}
               </div>
@@ -154,7 +155,7 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border animate-fade-in backdrop-blur-lg">
+          <div className="md:hidden py-4  animate-fade-in">
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <a
@@ -167,12 +168,33 @@ export function Navbar() {
                 </a>
               ))}
               <div className="flex gap-2 mt-4 px-4">
-                <Button variant="outline" className="flex-1">
-                  Log in
-                </Button>
-                <Button variant="default" className="flex-1">
-                  Sign up
-                </Button>
+                {loading ? (
+                  <Loader2 className="animate-spin text-white text-center" />
+                ) : !user ? (
+                  <>
+                    <Link href={`/auth`} className="flex-1">
+                      <Button variant="default" className="w-full">
+                        Log in
+                      </Button>
+                    </Link>
+                    <Link href={`/auth`} className="flex-1">
+                      <Button variant="outline" className="w-full text-white">
+                        Sign up
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      className="flex w-full text-left py-2"
+                      variant={"destructive"}
+                      onClick={signOut}
+                    >
+                      <span>Sign out</span>
+                      <LogOut className="w-4 h-4 ml-2 scale-x-[-1]" />
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>
