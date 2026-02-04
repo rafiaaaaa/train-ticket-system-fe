@@ -20,6 +20,8 @@ const getStepState = (stepId: string, currentStatus: BookingStatus) => {
   const currentIndex = statusOrder.indexOf(currentStatus);
   const stepIndex = statusOrder.indexOf(stepId);
 
+  if (currentStatus === "PAID") return "completed";
+
   if (stepIndex < currentIndex) return "completed";
   if (stepIndex === currentIndex) return "active";
   return "upcoming";
