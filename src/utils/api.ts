@@ -20,19 +20,21 @@ export class ApiError extends Error {
 const isServer = typeof window === "undefined";
 
 const BASE_URL = isServer ? process.env.NEXT_PUBLIC_API_URL! : "/api";
-console.log("BASE_URL", BASE_URL);
 export async function api(url: string, options: FetcherOptions = {}) {
-  console.log("api", BASE_URL + url);
-  const res = await fetch(BASE_URL + url, {
-    method: options.method ?? "GET",
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-    body: options.body ? JSON.stringify(options.body) : undefined,
-    credentials: options.credentials,
-    cache: options.cache,
-  });
-
-  return res.json();
+  try {
+    const res = await fetch(BASE_URL + url, {
+      method: options.method ?? "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      body: options.body ? JSON.stringify(options.body) : undefined,
+      credentials: options.credentials,
+      cache: options.cache,
+    });
+    
+    return res.json();
+  } catch (error) {
+    console.error("Error: ", error);
+  }
 }

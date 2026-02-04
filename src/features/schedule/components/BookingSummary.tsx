@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { AlertCircle, ChevronLeft, Check } from "lucide-react";
+import { AlertCircle, ChevronLeft, Check, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card from "@/components/Card";
 
@@ -13,6 +13,7 @@ interface BookingSummaryProps {
   pricePerSeat: number;
   onConfirm: () => void;
   onBack: () => void;
+  loading: boolean;
 }
 
 const BookingSummary = ({
@@ -20,6 +21,7 @@ const BookingSummary = ({
   pricePerSeat,
   onConfirm,
   onBack,
+  loading,
 }: BookingSummaryProps) => {
   const totalPrice = selectedSeats.length * pricePerSeat;
   const hasSelection = selectedSeats.length > 0;
@@ -137,12 +139,18 @@ const BookingSummary = ({
       <div className="space-y-3">
         <Button
           onClick={onConfirm}
-          disabled={!hasSelection}
+          disabled={!hasSelection || loading}
           className="w-full bg-bg-primary text-primary"
           size="lg"
         >
-          <Check className="w-4 h-4 mr-2" />
-          Confirm Seat
+          {loading ? (
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+          ) : (
+            <>
+              <Check className="w-4 h-4 mr-2" />
+              Confirm Seat
+            </>
+          )}
         </Button>
 
         <Button onClick={onBack} variant="outline" className="w-full" size="lg">

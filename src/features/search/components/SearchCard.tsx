@@ -75,7 +75,7 @@ export function SearchCard({
             </span>
           </p>
         </div>
-        <Link href={`/schedule/${id}`}>
+        <Link href={`/schedule/${id}`} prefetch={false}>
           <Button
             variant="accent"
             className="group-hover:shadow-lg transition-shadow bg-bg-primary text-primary cursor-pointer"

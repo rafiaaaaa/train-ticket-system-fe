@@ -29,6 +29,7 @@ type Props = {
 
 export default function SchedulePage({ data }: Props) {
   const { schedule } = data;
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const [seats, setSeats] = useState(
@@ -66,6 +67,7 @@ export default function SchedulePage({ data }: Props) {
 
   const handleBooking = async () => {
     try {
+      setLoading(true);
       const booking = await createBooking({
         scheduleId: schedule.id,
         seatIds: selectedSeats.map((s) => s.id),
@@ -81,6 +83,8 @@ export default function SchedulePage({ data }: Props) {
 
       console.log(err);
       toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,6 +115,7 @@ export default function SchedulePage({ data }: Props) {
             pricePerSeat={schedule.price}
             onConfirm={handleBooking}
             onBack={() => {}}
+            loading={loading}
           />
         </div>
       </div>

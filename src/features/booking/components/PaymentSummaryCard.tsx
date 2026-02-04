@@ -22,6 +22,7 @@ interface PaymentSummaryCardProps {
   onCancelOrder?: () => void;
   onDownloadTicket?: () => void;
   onViewETicket?: () => void;
+  loadingPayNow?: boolean;
 }
 const adminFee = Number(process.env.NEXT_PUBLIC_ADMIN_FEE) || 1000;
 export function PaymentSummaryCard({
@@ -33,6 +34,7 @@ export function PaymentSummaryCard({
   onCancelOrder,
   onDownloadTicket,
   onViewETicket,
+  loadingPayNow,
 }: PaymentSummaryCardProps) {
   const [loading, setLoading] = useState(false);
   const subtotal = ticketPrice;
@@ -99,9 +101,20 @@ export function PaymentSummaryCard({
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
           >
-            <Button onClick={onPayNow} className="w-full" size="lg">
-              <CreditCard className="w-4 h-4 mr-2" />
-              Pay Now
+            <Button
+              onClick={onPayNow}
+              disabled={loadingPayNow}
+              className="w-full"
+              size="lg"
+            >
+              {loadingPayNow ? (
+                <Loader2 className="animate-spin w-4 h-4" />
+              ) : (
+                <>
+                  <CreditCard className="w-4 h-4 mr-2" />
+                  Pay Now
+                </>
+              )}
             </Button>
             <Button
               onClick={onCancelOrder}

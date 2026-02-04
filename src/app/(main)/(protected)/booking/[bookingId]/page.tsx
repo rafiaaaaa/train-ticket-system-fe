@@ -275,6 +275,7 @@ const OrderDetail = () => {
                 onCancelOrder={handleCancelOrder}
                 onDownloadTicket={handleDownloadTicket}
                 onViewETicket={handleViewETicket}
+                loadingPayNow={loading}
               />
             </motion.div>
           </div>
