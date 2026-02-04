@@ -12,17 +12,18 @@ import { RegisterPayload, signup } from "../api/signup";
 export const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const handleSignUp = handleSubmit(async (data) => {
     setIsLoading(true);
     try {
-      console.log(data);
       toast.promise(signup(data as RegisterPayload), {
         loading: "Signing up...",
         success: "Signed up successfully",
         error: (err) => err.message,
       });
+
+      reset();
     } catch (error) {
       console.error(error);
     } finally {
