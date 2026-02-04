@@ -4,14 +4,12 @@ import { Loader2, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { logout } from "@/features/auth/api/logout";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Schedule", href: "/search" },
-  { label: "Promotions", href: "#promotions" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "#contact" },
 ];
 
